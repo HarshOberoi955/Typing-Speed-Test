@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Typing Speed Test</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#1e1e2f;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+.container{
+background:#2c2c44;
+padding:30px;
+border-radius:15px;
+text-align:center;
+width:420px;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+h2{
+margin-bottom:20px;
+}
+
+#sentence{
+font-size:18px;
+margin-bottom:15px;
+}
+
+textarea{
+width:100%;
+height:120px;
+padding:10px;
+font-size:16px;
+border-radius:8px;
+border:3px solid gray;
+resize:none;
+}
+
+button{
+margin-top:15px;
+padding:10px 20px;
+font-size:16px;
+cursor:pointer;
+border:none;
+border-radius:6px;
+background:#4caf50;
+color:white;
+}
+
+button:hover{
+background:#45a049;
+}
+
+#count{
+margin-top:10px;
+font-size:14px;
+color:#ccc;
+}
+
+#result{
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Typing Speed Test ⌨️</h2>
+
+<p id="sentence">Click Start Test</p>
+
+<textarea id="input" placeholder="Start typing here..."></textarea>
+
+<br>
+
+<button onclick="startTest()">Start Test</button>
+
+<p id="count">0 characters typed</p>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+
+let sentences = [
+"JavaScript makes web pages interactive and fun to build.",
+"Practice every day to improve your typing speed and accuracy.",
+"Learning programming requires patience and consistency.",
+"Small projects help beginners become confident developers.",
+"Typing faster can save a lot of time when coding."
+];
+
+let startTime;
+
+function startTest(){
+
+let randomIndex = Math.floor(Math.random()*sentences.length);
+
+let randomSentence = sentences[randomIndex];
+
+document.getElementById("sentence").innerText = randomSentence;
+
+document.getElementById("input").value = "";
+
+document.getElementById("input").disabled = false;
+
+document.getElementById("result").innerHTML = "";
+
+document.getElementById("count").innerHTML = "0 characters typed";
+
+document.getElementById("input").style.border = "3px solid gray";
+
+startTime = new Date().getTime();
+
+}
+
+document.getElementById("input").addEventListener("input",function(){
+
+let typedText = this.value;
+
+let sentence = document.getElementById("sentence").innerText;
+
+document.getElementById("count").innerHTML =
+typedText.length + " characters typed";
+
+if(!sentence.startsWith(typedText)){
+document.getElementById("input").style.border="3px solid red";
+}else{
+document.getElementById("input").style.border="3px solid green";
+}
+
+if(typedText.length >= sentence.length){
+
+let endTime = new Date().getTime();
+
+let timeTaken = (endTime-startTime)/1000;
+
+let words = sentence.split(" ").length;
+
+let speed = Math.round((words/timeTaken)*60);
+
+document.getElementById("result").innerHTML =
+"Your typing speed is "+speed+" WPM 🚀";
+
+document.getElementById("input").disabled = true;
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>
